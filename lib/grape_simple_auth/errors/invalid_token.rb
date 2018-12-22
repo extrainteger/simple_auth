@@ -1,4 +1,4 @@
-module SimpleAuth
+module GrapeSimpleAuth
   module Errors
     class InvalidToken < StandardError
       def initialize msg = "Invalid token"

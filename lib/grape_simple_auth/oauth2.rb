@@ -1,6 +1,6 @@
 require 'rack/auth/abstract/request'
 
-module SimpleAuth
+module GrapeSimpleAuth
   class Oauth2 < Grape::Middleware::Base
     attr_reader :auth_strategy
 
@@ -39,15 +39,15 @@ module SimpleAuth
     end
 
     def authorize!(*scopes)
-      response = HTTParty.get(SimpleAuth.verify_url, {query: {access_token: token}})
+      response = HTTParty.get(GrapeSimpleAuth.verify_url, {query: {access_token: token}})
       if response.code == 200
         scopes = response.parsed_response["data"]["credential"]["scopes"]
         unless auth_strategy.auth_scopes & scopes == auth_strategy.auth_scopes
-          raise SimpleAuth::Errors::InvalidScope
+          raise GrapeSimpleAuth::Errors::InvalidScope
         end
         return response
       end
-      raise SimpleAuth::Errors::InvalidToken
+      raise GrapeSimpleAuth::Errors::InvalidToken
     end
     
     ############
@@ -55,9 +55,9 @@ module SimpleAuth
     ############
 
     def before
-      set_auth_strategy(SimpleAuth.auth_strategy)
+      set_auth_strategy(GrapeSimpleAuth.auth_strategy)
       auth_strategy.api_context = context
-      context.extend(SimpleAuth::AuthMethods)
+      context.extend(GrapeSimpleAuth::AuthMethods)
 
       context.protected_endpoint = endpoint_protected?
       return unless context.protected_endpoint?
@@ -73,7 +73,7 @@ module SimpleAuth
     private
 
     def set_auth_strategy(strategy)
-      @auth_strategy = SimpleAuth::AuthStrategies.const_get(strategy.to_s.capitalize.to_s).new
+      @auth_strategy = GrapeSimpleAuth::AuthStrategies.const_get(strategy.to_s.capitalize.to_s).new
     end
     
     

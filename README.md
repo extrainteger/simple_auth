@@ -1,6 +1,6 @@
-# Simple Auth
+# Grape Simple Auth
 
-Simple Auth is a Grape middleware to connect your API resources with your API authenticator.
+Grape Simple Auth is a Grape middleware to connect your API resources with your API authenticator.
 
 
 ## Installation
@@ -8,7 +8,7 @@ Simple Auth is a Grape middleware to connect your API resources with your API au
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'simple_auth'
+gem 'grape_simple_auth'
 ```
 
 And then execute:
@@ -17,7 +17,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install simple_auth
+    $ gem install grape_simple_auth
 
 ## Usage
 
@@ -26,7 +26,7 @@ Or install it yourself as:
 On your first install, run this generator :
 
 ```ruby
-rails g simple_auth:install
+rails g grape_simple_auth:install
 ```
 
 ### Configuration
@@ -42,24 +42,24 @@ You will need to use the middleware in your main API :
 
 ```ruby
 # use middleware
-use ::SimpleAuth::Oauth2
+use ::GrapeSimpleAuth::Oauth2
 ```
 
 You could also use the helpers :
 
 ```ruby
 # use helpers
-helpers ::SimpleAuth::Helpers
+helpers ::GrapeSimpleAuth::Helpers
 ```
 
 And also don't forget to rescue the invalid token :
 
 ```ruby
 # rescue invalid token
-rescue_from SimpleAuth::Errors::InvalidToken do |e|
+rescue_from GrapeSimpleAuth::Errors::InvalidToken do |e|
   error!(e, 401)
 end
-rescue_from SimpleAuth::Errors::InvalidScope do |e|
+rescue_from GrapeSimpleAuth::Errors::InvalidScope do |e|
   error!(e, 401)
 end
 ```
@@ -144,7 +144,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/simple_auth. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/extrainteger/simple_auth. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
@@ -152,4 +152,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the SimpleAuth project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/simple_auth/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the GrapeSimpleAuth project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/extrainteger/simple_auth/blob/master/CODE_OF_CONDUCT.md).

@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "simple_auth"
+require "grape_simple_auth"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

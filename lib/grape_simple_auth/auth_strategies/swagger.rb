@@ -1,6 +1,6 @@
-module SimpleAuth
+module GrapeSimpleAuth
   module AuthStrategies
-    class Swagger < SimpleAuth::BaseStrategy
+    class Swagger < GrapeSimpleAuth::BaseStrategy
 
       def endpoint_protected?
         has_authorizations? && !!authorization_type_oauth2

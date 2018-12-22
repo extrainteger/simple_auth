@@ -1,16 +1,16 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "simple_auth/version"
+require "grape_simple_auth/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "simple_auth"
-  spec.version       = SimpleAuth::VERSION
+  spec.name          = "grape_simple_auth"
+  spec.version       = GrapeSimpleAuth::VERSION
   spec.authors       = ["Yunan Helmy"]
   spec.email         = ["helmy@extrainteger.com"]
 
-  spec.summary       = "Simple auth wrapper"
-  spec.description   = "This gem is used as a middleware for a separate resource API and authenticator API"
+  spec.summary       = "Grape Simple Auth is a Grape middleware to connect your API resources with your API authenticator."
+  spec.description   = "Grape Simple Auth is a Grape middleware to connect your API resources with your API authenticator."
   spec.homepage      = "https://github.com/extrainteger/simple_auth"
   spec.license       = "MIT"
 
@@ -35,6 +35,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.16"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
-  spec.add_dependency "httparty", "~> 0"
-  spec.add_dependency "grape", "~> 0"
+  spec.add_dependency "httparty", "~> 0.16.3"
+  spec.add_dependency "grape", "~> 1.1.0"
 end

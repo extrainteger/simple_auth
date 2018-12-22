@@ -1,4 +1,4 @@
-module SimpleAuth
+module GrapeSimpleAuth
   module Configuration
     def setup
       yield self

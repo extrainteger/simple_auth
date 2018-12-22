@@ -1,4 +1,4 @@
-module SimpleAuth
+module GrapeSimpleAuth
   module AuthMethods
     attr_accessor :the_access_token, :current_user, :credentials
 

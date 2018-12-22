@@ -1,6 +1,6 @@
-RSpec.describe SimpleAuth do
+RSpec.describe GrapeSimpleAuth do
   it "has a version number" do
-    expect(SimpleAuth::VERSION).not_to be nil
+    expect(GrapeSimpleAuth::VERSION).not_to be nil
   end
 
   it "does something useful" do

@@ -1,4 +1,4 @@
-module SimpleAuth
+module GrapeSimpleAuth
   module Extension
     
     def oauth2(*scopes)
