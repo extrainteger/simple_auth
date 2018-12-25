@@ -19,7 +19,7 @@ module GrapeSimpleAuth
     end
 
     def current_user=(info)
-      @_current_user = JSON.parse(info.to_json, object_class: DataStruct)
+      @_current_user = JSON.parse(info.to_json, object_class: User)
     end
 
     def current_user
@@ -32,6 +32,33 @@ module GrapeSimpleAuth
 
     def credentials
       @credentials
+    end
+
+    class User < OpenStruct
+      def as_json(*args)
+        super.as_json['table']
+      end
+
+      def self.base_class
+        self
+      end
+
+      def self.primary_key
+        "id"
+      end
+      
+    
+      def self.name
+        GrapeSimpleAuth.current_user_class
+      end
+    
+      def _read_attribute attr
+        self.send attr
+      end
+    
+      def self.polymorphic_name
+        GrapeSimpleAuth.current_user_class
+      end
     end
 
     class DataStruct < OpenStruct

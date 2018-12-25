@@ -22,6 +22,7 @@ module GrapeSimpleAuth
   define_setting :url, "http://localhost:4000"
   define_setting :verify_endpoint, "/v1/valid_token/verify"
   define_setting :auth_strategy, "swagger"
+  define_setting :current_user_class, "User"
 
   def self.verify_url
     url + verify_endpoint
