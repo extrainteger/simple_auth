@@ -2,6 +2,10 @@ module GrapeSimpleAuth
   module AuthStrategies
     class Swagger < GrapeSimpleAuth::BaseStrategy
 
+      def optional_endpoint?
+        has_authorizations? && !!optional_oauth2
+      end
+
       def endpoint_protected?
         has_authorizations? && !!authorization_type_oauth2
       end
@@ -11,7 +15,11 @@ module GrapeSimpleAuth
       end
 
       def auth_scopes
-        authorization_type_oauth2.map { |hash| hash[:scope].to_sym }
+        if optional_endpoint?
+          optional_oauth2.map { |hash| hash[:scope].to_sym }
+        else
+          authorization_type_oauth2.map { |hash| hash[:scope].to_sym }
+        end
       end
 
       private
@@ -26,6 +34,10 @@ module GrapeSimpleAuth
 
       def authorization_type_oauth2
         endpoint_authorizations[:oauth2]
+      end
+
+      def optional_oauth2
+        endpoint_authorizations[:optional_oauth2]
       end
 
     end

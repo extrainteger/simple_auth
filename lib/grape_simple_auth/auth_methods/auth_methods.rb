@@ -10,6 +10,14 @@ module GrapeSimpleAuth
       @protected_endpoint || false
     end
 
+    def optional_endpoint=(opt)
+      @optional_endpoint = opt
+    end
+
+    def optional_endpoint?
+      @optional_endpoint || false
+    end
+
     def the_access_token
       @_the_access_token
     end

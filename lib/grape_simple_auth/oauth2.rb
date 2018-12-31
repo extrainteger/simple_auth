@@ -39,6 +39,10 @@ module GrapeSimpleAuth
       auth_strategy.endpoint_protected?
     end
 
+    def optional_endpoint?
+      auth_strategy.optional_endpoint?
+    end
+
     def auth_scopes
       return *nil unless auth_strategy.has_auth_scopes?
       auth_strategy.auth_scopes
@@ -66,13 +70,20 @@ module GrapeSimpleAuth
       context.extend(GrapeSimpleAuth::AuthMethods)
 
       context.protected_endpoint = endpoint_protected?
-      return unless context.protected_endpoint?
+      context.optional_endpoint = optional_endpoint?
 
+      return unless context.protected_endpoint? || context.optional_endpoint?
+      
       self.the_request = env
-      resp = authorize!(*auth_scopes)
-      context.the_access_token = token
-      context.current_user = resp.parsed_response["data"]["info"] rescue nil
-      context.credentials = resp.parsed_response["data"]["credential"] rescue nil
+      
+      if token.present? && (context.protected_endpoint? || context.optional_endpoint?)
+        resp = authorize!(*auth_scopes)
+        context.the_access_token = token
+        context.current_user = resp.parsed_response["data"]["info"] rescue nil
+        context.credentials = resp.parsed_response["data"]["credential"] rescue nil
+      elsif token.nil? && context.protected_endpoint?
+        raise GrapeSimpleAuth::Errors::InvalidToken
+      end
     end
 
 
