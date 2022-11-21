@@ -51,9 +51,25 @@ module GrapeSimpleAuth
     def authorize!(*scopes)
       response = HTTParty.get(GrapeSimpleAuth.verify_url, {query: {access_token: token}})
       if response.code == 200
-        scopes = response.parsed_response["data"]["credential"]["scopes"]
-        unless auth_strategy.auth_scopes & scopes == auth_strategy.auth_scopes
-          raise GrapeSimpleAuth::Errors::InvalidScope
+        begin
+          scopes = response.parsed_response["data"]["credential"]["scopes"]
+        rescue NoMethodError
+          raise GrapeSimpleAuth::Errors::InvalidToken
+        end
+        if auth_strategy.auth_scope_match == 'all'
+          unless auth_strategy.auth_scopes.sort && scopes.map(&:to_sym).sort == auth_strategy.auth_scopes.sort
+            raise GrapeSimpleAuth::Errors::InvalidScope
+          end
+        elsif auth_strategy.auth_scope_match == 'any'
+          if auth_strategy.auth_scopes.any?
+            match_any = false
+            scopes.map(&:to_sym).each do |scope|
+              match_any = true if scope.in?(auth_strategy.auth_scopes)
+            end
+            raise GrapeSimpleAuth::Errors::InvalidScope unless match_any
+          end
+        elsif auth_strategy.auth_scope_match.nil?
+          raise GrapeSimpleAuth::Errors::InvalidScopeMatcher
         end
         return response
       end

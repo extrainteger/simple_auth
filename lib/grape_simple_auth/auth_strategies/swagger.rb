@@ -22,6 +22,10 @@ module GrapeSimpleAuth
         end
       end
 
+      def auth_scope_match
+        authorization_type_oauth2_scope_match
+      end
+
       private
 
       def has_authorizations?
@@ -34,6 +38,10 @@ module GrapeSimpleAuth
 
       def authorization_type_oauth2
         endpoint_authorizations[:oauth2]
+      end
+
+      def authorization_type_oauth2_scope_match
+        endpoint_authorizations[:scope_match]
       end
 
       def optional_oauth2

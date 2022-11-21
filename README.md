@@ -62,14 +62,20 @@ end
 rescue_from GrapeSimpleAuth::Errors::InvalidScope do |e|
   error!(e, 401)
 end
+rescue_from GrapeSimpleAuth::Errors::InvalidScopeMatcher do |e|
+  error!(e, 401)
+end
 ```
 
 ### Protecting your endpoint
 
 In your endpoint you need to define which protected endpoint by adding this DSL :
 
-1.  `oauth2`
-2.  `oauth2 "email"`
+1.  `oauth2` => Any scopes as long as the token is valid
+2.  `oauth2 "email"` => Scope can be "email"
+3.  `oauth2 "email", match: "all"` => Scope must be "email"
+4.  `oauth2 "email", "phone"` Scopes can match "email" or "phone"
+5.  `oauth2 "email", "phone", match: "all"` Scopes must match "email" and "phone"
 
 Example :
 

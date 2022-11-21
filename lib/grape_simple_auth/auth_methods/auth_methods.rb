@@ -33,7 +33,7 @@ module GrapeSimpleAuth
     def current_user
       @_current_user
     end
-    
+
     def credentials=(data)
       @credentials = JSON.parse(data.to_json, object_class: DataStruct)
     end

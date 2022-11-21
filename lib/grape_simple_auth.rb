@@ -15,6 +15,7 @@ require 'grape_simple_auth/auth_methods/auth_methods'
 
 require 'grape_simple_auth/errors/invalid_token'
 require 'grape_simple_auth/errors/invalid_scope'
+require 'grape_simple_auth/errors/invalid_scope_matcher'
 
 module GrapeSimpleAuth
   extend GrapeSimpleAuth::Configuration
